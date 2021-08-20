@@ -56,7 +56,7 @@
             <div class="col-lg-6">
                 <!-- Mashead text and app badges-->
                 <div class="mb-5 mb-lg-0 text-center text-lg-start">
-                    <h1 class="display-1 lh-1 mb-3">Katana - System rejestracji zgłoszeń</h1>
+                    <h1 class="display-1 lh-1 mb-3" style="font-weight: 900;">Katana - System rejestracji zgłoszeń</h1>
                     <p class="lead fw-normal text-muted mb-5">System dostępny jako aplikacja na ANDROIDA </p>
                     {{-- <div class="d-flex flex-column flex-lg-row align-items-center"> --}}
                         <a class="me-lg-3 mb-4 mb-lg-0" href="#!"><img class="app-badge" src="./assets/img/qr.png" style="width: 200px; height: 200px;" alt="..." /></a>
@@ -214,35 +214,68 @@
                 <h5 class="modal-title font-alt text-white" id="feedbackModalLabel">Rejestracja do systemu</h5>
                 <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body border-0 p-4">
-                <form  action="{{route('user.forms')}}" method="POST" >
-                    <!-- Name input-->
-                    @method('PUT')
+            <div class="card-body">
+                <form method="POST" action="{{ route('register') }}">
                     @csrf
 
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="name" name="name" type="text"/>
-                        <label for="name">Full name</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    <div class="form-group row">
+{{--                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>--}}
+                        <label for="name" class="col-md-4 col-form-label text-md-right">Nazwa Firmy</label>
+
+                        <div class="col-md-6">
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
                     </div>
-                    <!-- Email address input-->
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="email" name="email" type="email"  />
-                        <label for="email">Email address</label>
-                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+
+                    <div class="form-group row">
+                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="password" name="password" type="password" />
-                        <label for="phone">Hasło</label>
-                        <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+
+                    <div class="form-group row">
+                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="repeat_password" name="repeat_password" type="password"  />
-                        <label for="phone">Hasło</label>
-                        <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+
+                    <div class="form-group row">
+                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        </div>
                     </div>
-                    <input class="btn btn-primary" style="background-color: #9f1ae2; color:white;" id="submitButton" type="submit" value="Zapisz">
+
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Register') }}
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
